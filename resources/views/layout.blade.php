@@ -152,6 +152,12 @@
                   Projects
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/users">
+                  <span data-feather="home"></span>
+                  Users
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
