@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ProjectsTicketsController;
+use App\Http\Controllers\TicketsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +22,6 @@ Route::get('/', function () {
 });
 
 Route::resource('/projects', ProjectsController::class);
+Route::resource('/tickets', TicketsController::class)->only(['show', 'destroy']);
 
 Route::post('/projects/{project}/tickets', [ProjectsTicketsController::class, 'store']);
