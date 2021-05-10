@@ -5,20 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Ticket;
-
-class Project extends Model
+class Ticket extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'project_id'
     ];
 
-    public function tickets(){
-        return $this->hasMany(Ticket::class);
-    }
-
-    protected $table = 'projects';
+    protected $table = 'tickets';
 }

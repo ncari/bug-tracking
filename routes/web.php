@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\ProjectsTicketsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,4 @@ Route::get('/', function () {
 
 Route::resource('/projects', ProjectsController::class);
 
+Route::post('/projects/{project}/tickets', [ProjectsTicketsController::class, 'store']);
