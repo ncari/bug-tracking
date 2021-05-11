@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 Route::resource('/projects', ProjectsController::class);
 Route::resource('/tickets', TicketsController::class)->only(['show', 'destroy']);
-Route::resource('/users', UsersController::class)->only(['create', 'store']);
+Route::resource('/users', UsersController::class)->only(['create', 'store', 'index']);
 
 Route::post('/projects/{project}/tickets', [ProjectsTicketsController::class, 'store']);
 Route::post('/tickets/{ticket}/comments', [TicketsCommentsController::class, 'store']);
