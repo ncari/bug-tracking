@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bug Tracking Application</title>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
 
     <style>
       .bd-placeholder-img {
@@ -26,6 +28,7 @@
       }
       body {
         font-size: .875rem;
+        font-family: 'Nunito', sans-serif;
       }
 
       .feather {
@@ -147,13 +150,13 @@
           <div class="position-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/projects">
+                <a class="nav-link @if(Request::is(['projects', 'projects/*'])) active @endif" aria-current="page" href="/projects">
                   <span data-feather="home"></span>
                   Projects
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/users">
+                <a class="nav-link @if(Request::is(['users', 'users/*'])) active @endif" aria-current="page" href="/users">
                   <span data-feather="home"></span>
                   Users
                 </a>
