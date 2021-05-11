@@ -49,7 +49,9 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        return $user;
+        return view('users.show', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -72,7 +74,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->update($request->all());
+        return back();
     }
 
     /**
@@ -83,6 +86,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect('/home');
     }
 }
