@@ -23,9 +23,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/projects', ProjectsController::class);
-Route::resource('/tickets', TicketsController::class)->only(['show', 'destroy']);
-Route::resource('/users', UsersController::class)->only(['create', 'store', 'index']);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('/projects', ProjectsController::class);
 
-Route::post('/projects/{project}/tickets', [ProjectsTicketsController::class, 'store']);
-Route::post('/tickets/{ticket}/comments', [TicketsCommentsController::class, 'store']);
+    Route::resource('/tickets', TicketsController::class)->only(['show', 'destroy']);
+    Route::resource('/users', UsersController::class)->only(['create', 'store', 'index']);
+
+    Route::post('/projects/{project}/tickets', [ProjectsTicketsController::class, 'store']);
+    Route::post('/tickets/{ticket}/comments', [TicketsCommentsController::class, 'store']);
+
+    Route::get('/home', [ProjectsController::class, 'index']);
+});
+
+Auth::routes(['register' => false]);
