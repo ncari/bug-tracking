@@ -10,25 +10,26 @@
         </div>
         <div class="mt-3">
             <h2>Tickets</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach ($project->tickets as $ticket)
-                        <tr>
-                            <th scope="row"><a href="/tickets/{{$ticket->id}}">{{ $ticket->id }}</a></th>
-                            <td>{{ $ticket->name }}</td>
-                            <td>{{ $ticket->description }}</td>
+            <x-alert-empty name="tickets" :n="$project->tickets->count()">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
                     </tr>
-                    @endforeach
-                </tbody>
-                
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($project->tickets as $ticket)
+                            <tr>
+                                <th scope="row"><a href="/tickets/{{$ticket->id}}">{{ $ticket->id }}</a></th>
+                                <td>{{ $ticket->name }}</td>
+                                <td>{{ $ticket->description }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </x-alert-empty>
         </div>
         <div class="mt-5">
             <h4>New Ticket</h4>
@@ -46,12 +47,6 @@
             </form>
         </div>
     </div>
-    <div class="p-3 bg-light">
-        <h2>Settings</h2>
-        <form method="post">
-            @method('DELETE')
-            @csrf
-            <button type="submit" id="delete" class="btn btn-outline-danger btn-sm">Delete Project</button>
-        </form>
-    </div>
+
+    <x-danger-zone formUrl="/projects/{{$project->id}}" name="Project"/>
 @endsection

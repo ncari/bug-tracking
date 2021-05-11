@@ -2,7 +2,8 @@
 
 @section('content')
     <h1>Users</h1>
-    <table class="table">
+    <x-alert-empty name="users" :n="$users->count()">
+      <table class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -21,4 +22,5 @@
         </tbody>
         
       </table>
+    </x-alert-empty>
 @endsection

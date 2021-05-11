@@ -3,7 +3,8 @@
 
 @section('content')
     <h1>Projects</h1>
-    <table class="table">
+    <x-alert-empty name="projects" :n="$projects->count()">
+      <table class="table">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -22,6 +23,7 @@
         </tbody>
         
       </table>
+    </x-alert-empty>
     
         
 

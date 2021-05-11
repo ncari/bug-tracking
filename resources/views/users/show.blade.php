@@ -26,13 +26,6 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-    <div class="p-3 bg-light">
-        <h2>Settings</h2>
-        <form action="/users/{{$user->id}}" method="post">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-outline-danger btn-sm">Delete Account</button>
-        </form>
-    </div>
+    <x-danger-zone formUrl="/users/{{$user->id}}" name="Account"/>
 
 @endsection
