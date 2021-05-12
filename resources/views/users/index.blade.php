@@ -9,6 +9,7 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Type</th>
           </tr>
         </thead>
         <tbody>
@@ -17,6 +18,7 @@
                     <th scope="row"><a href="/users/{{$user->id}}">{{ $user->id }}</a></th>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    <td>{{ $user->type }}</td>
               </tr>
             @endforeach
         </tbody>

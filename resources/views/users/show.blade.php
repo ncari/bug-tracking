@@ -23,7 +23,7 @@
                     <option value="ADMIN" @if($user->type == "ADMIN") selected @endif>Admin</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Edit</button>
         </form>
     </div>
     <x-danger-zone formUrl="/users/{{$user->id}}" name="Account"/>

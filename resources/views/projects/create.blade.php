@@ -3,7 +3,7 @@
 
 @section('content')
     <h1>Projects</h1>
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header">
             Create Project
         </div>
@@ -18,7 +18,7 @@
                     <label for="description">Description</label>
                     <textarea name="description" id="description" name="description" cols="30" rows="10" class="form-control"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary float-end">Submit</button>
+                <button type="submit" class="btn btn-primary float-end">Create</button>
             </form>
         </div>
     </div>

@@ -10,6 +10,8 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
+            <th scope="col">Tickets</th>
+            <th scope="col">Last Ticket</th>
           </tr>
         </thead>
         <tbody>
@@ -18,6 +20,17 @@
                     <th scope="row"><a href="/projects/{{$project->id}}">{{ $project->id }}</a></th>
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->description }}</td>
+                    <td>{{ $project->tickets->count() }}</td>
+                    <td>
+                      @php
+                          $lastTicket = $project->tickets()->orderByDesc('updated_at')->first();
+                      @endphp
+                      @if($lastTicket !== null)
+                          {{ $lastTicket->updated_at->diffForHumans() }}    
+                      @else
+                          -
+                      @endif
+                  </td>
               </tr>
             @endforeach
         </tbody>

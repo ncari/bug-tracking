@@ -1,4 +1,4 @@
-<div class="p-3 bg-light">
+<div class="p-3 bg-light mt-5">
     <h2>Settings</h2>
     <form action="{{$formUrl}}" method="post">
         @csrf

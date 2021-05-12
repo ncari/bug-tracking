@@ -3,7 +3,7 @@
 
 @section('content')
     <h1>Users</h1>
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header">
             Create User
         </div>
@@ -31,7 +31,7 @@
                         <option value="ADMIN">Admin</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary float-end">Submit</button>
+                <button type="submit" class="btn btn-primary float-end">Create</button>
             </form>
         </div>
     </div>

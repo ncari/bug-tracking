@@ -82,6 +82,7 @@
 
       .sidebar .nav-link.active {
         color: #007bff;
+        font-weight: bold;
       }
 
       .sidebar .nav-link:hover .feather,
@@ -127,12 +128,21 @@
         border-color: transparent;
         box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
       }
+
+      .active-user{
+        color: inherit;
+      }
+
+      .collapsed-link{
+        color: inherit;
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
     
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/home">Company name</a>
       <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -157,22 +167,49 @@
             @if (Auth::check())
               <div class="nav-item pb-2">
                 <div class="nav-link fw-bold">
-                  Hello {{ Auth::user()->name }}
+                  Hello 
+                  <a href="/users/{{Auth::user()->id}}" class="active-user" >
+                    {{ Auth::user()->name }}
+                  </a>
                 </div>    
               </div>
             @endif
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link @if(Request::is(['projects', 'projects/*'])) active @endif" aria-current="page" href="/projects">
-                  <span data-feather="home"></span>
+                <a class="nav-link @if(Request::is(['projects', 'projects/*'])) active @endif" aria-current="page"
+                  data-bs-toggle="collapse" href="#collapseProjectsNav" role="button" aria-expanded="false" aria-controls="collapseProjectsNav"
+                >
+                  <span data-feather="box"></span>
                   Projects
                 </a>
+                <div class="collapse" id="collapseProjectsNav">
+                  <ul>
+                    <li class="nav-link">
+                      <a class="collapsed-link" href="/projects">All</a>
+                    </li>
+                    <li class="nav-link">
+                      <a class="collapsed-link" href="/projects/create">Create</a>
+                    </li>
+                  </ul>
+                </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link @if(Request::is(['users', 'users/*'])) active @endif" aria-current="page" href="/users">
-                  <span data-feather="home"></span>
+                <a class="nav-link @if(Request::is(['users', 'users/*'])) active @endif" aria-current="page"
+                  data-bs-toggle="collapse" href="#collapseUsersNav" role="button" aria-expanded="false" aria-controls="collapseUsersNav"
+                >
+                  <span data-feather="users"></span>
                   Users
                 </a>
+                <div class="collapse" id="collapseUsersNav">
+                  <ul>
+                    <li class="nav-link">
+                      <a class="collapsed-link" href="/users">All</a>
+                    </li>
+                    <li class="nav-link">
+                      <a class="collapsed-link" href="/users/create">Create</a>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>
@@ -188,5 +225,9 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace()
+    </script>
   </body>
 </html>

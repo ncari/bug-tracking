@@ -6,17 +6,20 @@
     </div>
     <div class="mb-3">
         <h1>Ticket: {{ $ticket->name }}</h1>
-        <div class="card mb-2">
+        <div class="card mb-2 shadow-sm">
             <div class="card-body">
                 <span style="white-space: pre-line">{{ $ticket->description }}</span>
             </div>
         </div>
     </div>
-    <div class="mb-3 pb-3 border-bottom">
-        <h3>Comments</h3>
+    <div class="mt-5 mb-3 pb-3 border-bottom">
+        <div class="d-flex align-items-center">
+            <i data-feather="message-square"></i>
+            <h3>Comments</h1>
+        </div>
         <x-alert-empty name="comments" :n="$ticket->comments->count()">
             @foreach ($ticket->comments as $comment)
-                <div class="card mb-2">
+                <div class="card mb-2 shadow-sm">
                     <div class="card-header">
                         {{ $comment->created_at->diffForHumans()}}
                     </div>
@@ -26,7 +29,7 @@
                 </div>
             @endforeach
         </x-alert-empty>
-        <div class="mt-3">
+        <div class="mt-3 shadow p-3">
             <form action="/tickets/{{$ticket->id}}/comments" method="POST">
                 @csrf
                 <div class="mb-3">
