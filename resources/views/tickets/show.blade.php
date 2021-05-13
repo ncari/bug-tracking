@@ -31,7 +31,15 @@
         </h6>
         <div class="card mb-2 shadow-sm">
             <div class="card-body">
-                <span style="white-space: pre-line">{{ $ticket->description }}</span>
+                @if ($ticket_image !== null)
+                    <div class="mb-3">
+                        <span style="white-space: pre-line">{{ $ticket->description }}</span>    
+                    </div>
+                    <img src="data:image/jpeg;base64,{{$ticket_image}}" style="max-width: 100%"/>    
+                @else
+                    <span style="white-space: pre-line">{{ $ticket->description }}</span>
+                @endif
+                
             </div>
         </div>
     </div>

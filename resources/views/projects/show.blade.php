@@ -61,7 +61,7 @@
         </div>
         <div class="mt-4 shadow p-3">
             <h4>New Ticket</h4>
-            <form action="/projects/{{$project->id}}/tickets" method="POST">
+            <form action="/projects/{{$project->id}}/tickets" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="priority">Priority</label>
@@ -79,6 +79,10 @@
                 <div class="mb-3">
                     <label for="description">Description</label>
                     <textarea name="description" id="description" name="description" cols="30" rows="5" class="form-control form-control-sm"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="image" accept="image/jpg" class="form-control" /> 
                 </div>
                 <button type="submit" class="btn btn-primary">Add Ticket</button>
             </form>

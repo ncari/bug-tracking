@@ -17,7 +17,16 @@ class ProjectsTicketsController extends Controller
      */
     public function store(Request $request, Project $project)
     {
+        $path = null;
+        if($request->hasFile('image')){
+            $path = $request->file('image')->store('tickets_images');
+            if(!$path)
+                return back()->withErrors('ticket_image', 'There was an error uploading the image');
+        }
+    
         $ticket = new Ticket($request->all());
+        $ticket->image_path = $path;
+        
         $project->tickets()->save($ticket);
         return redirect('/projects'.'/'.$project->id);
     }

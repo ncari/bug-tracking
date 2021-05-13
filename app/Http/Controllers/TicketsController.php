@@ -48,6 +48,7 @@ class TicketsController extends Controller
     {
         return view('tickets.show', [
             'ticket' => $ticket,
+            'ticket_image' => $ticket->image64(),
             'project' => $ticket->project
         ]);
     }
