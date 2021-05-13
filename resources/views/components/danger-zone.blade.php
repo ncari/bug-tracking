@@ -1,5 +1,6 @@
 <div class="p-3 bg-light mt-5">
     <h2>Settings</h2>
+    {{ $slot }}
     <form action="{{$formUrl}}" method="post">
         @csrf
         @method('DELETE')

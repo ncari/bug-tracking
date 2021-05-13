@@ -5,6 +5,11 @@
         <div class="d-flex align-items-center">
             <i data-feather="box"></i>
             <h1 class="fw-bold">{{ $project->name }}</h1>
+            @if ($project->archived)
+                <span class="badge bg-secondary">Archived</span>    
+            @else
+                <span class="badge bg-success">Active</span>    
+            @endif
         </div>
         <div class="card shadow-sm">
             <div class="card-body">
@@ -25,6 +30,8 @@
                         <th scope="col">Description</th>
                         <th scope="col">Replies</th>
                         <th scope="col">Last Reply</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,6 +51,8 @@
                                         -
                                     @endif
                                 </td>
+                                <td>{{ $ticket->status }}</td>
+                                <td>{{ $ticket->priority }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -54,6 +63,15 @@
             <h4>New Ticket</h4>
             <form action="/projects/{{$project->id}}/tickets" method="POST">
                 @csrf
+                <div class="mb-3">
+                    <label for="priority">Priority</label>
+                    <select name="priority" id="priority" class="form-select" required>
+                        <option value="" selected>Choose One</option>
+                        <option value="L">Low</option>
+                        <option value="M">Medium</option>
+                        <option value="H">High</option>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" class="form-control form-control-sm">
@@ -67,5 +85,18 @@
         </div>
     </div>
 
-    <x-danger-zone formUrl="/projects/{{$project->id}}" name="Project"/>
+    <x-danger-zone formUrl="/projects/{{$project->id}}" name="Project">
+        <form class="mb-3" action="/projects/{{$project->id}}" method="post">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="archived" value=@if($project->archived) 0 @else 1 @endif>
+            <button type="submit" class="btn btn-sm btn-outline-primary">
+                @if ($project->archived)
+                    Active Project
+                @else
+                    Archive Project
+                @endif
+            </button>
+        </form>
+    </x-danger-zone>
 @endsection

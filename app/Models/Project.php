@@ -13,7 +13,8 @@ class Project extends Model
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'archived'
     ];
 
     public function tickets(){

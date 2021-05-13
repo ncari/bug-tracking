@@ -12,6 +12,7 @@
             <th scope="col">Description</th>
             <th scope="col">Tickets</th>
             <th scope="col">Last Ticket</th>
+            <th scope="col">Active</th>
           </tr>
         </thead>
         <tbody>
@@ -30,7 +31,14 @@
                       @else
                           -
                       @endif
-                  </td>
+                    </td>
+                    <td>
+                      @if($project->archived) 
+                        <i data-feather="x"></i>
+                      @else  
+                        <i data-feather="check"></i>
+                      @endif
+                    </td>
               </tr>
             @endforeach
         </tbody>

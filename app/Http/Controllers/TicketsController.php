@@ -72,7 +72,8 @@ class TicketsController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $ticket->update($request->all());
+        return back();
     }
 
     /**

@@ -5,7 +5,30 @@
         Project: <a href="/projects/{{$project->id}}">{{ $project->name }}</a>
     </div>
     <div class="mb-3">
-        <h1>Ticket: {{ $ticket->name }}</h1>
+        <div class="d-flex align-items-center">
+            <h1>{{ $ticket->name }}</h1>
+            @if ($ticket->status === "ARCHIVED")
+                <span class="badge bg-secondary">Archived</span>    
+            @else
+                @if ($ticket->status === "CLOSED")
+                    <span class="badge bg-danger">Closed</span>    
+                @else
+                    <span class="badge bg-success">Open</span>    
+                @endif
+            @endif
+        </div>
+        <h6 class="mb-3">
+            Priority: 
+            @if ($ticket->priority === "L")
+            <div class="badge bg-light text-dark">Low</div>    
+            @else
+                @if ($ticket->priority === "M")
+                    <div class="badge bg-warning">Medium</div> 
+                @else
+                    <span class="badge bg-danger">High</span>    
+                @endif
+            @endif
+        </h6>
         <div class="card mb-2 shadow-sm">
             <div class="card-body">
                 <span style="white-space: pre-line">{{ $ticket->description }}</span>
@@ -40,5 +63,27 @@
             </form>
         </div>
     </div>
-    <x-danger-zone formUrl="/tickets/{{$ticket->id}}" name="Ticket"/>
+    <x-danger-zone formUrl="/tickets/{{$ticket->id}}" name="Ticket">
+        <form class="mb-5" action="/tickets/{{$ticket->id}}" method="post">
+            @csrf
+            @method('PUT')
+            <div class="mb-3">
+                <label for="status">Status</label>
+                <select name="status" id="status" class="form-select" required>
+                    <option value="OPEN" @if($ticket->status == "OPEN") selected @endif>Open</option>
+                    <option value="CLOSED" @if($ticket->status == "CLOSED") selected @endif>Closed</option>
+                    <option value="ARCHIVED" @if($ticket->status == "ARCHIVED") selected @endif>Archived</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" class="form-select" required>
+                    <option value="L" @if($ticket->priority == "L") selected @endif>Low</option>
+                    <option value="M" @if($ticket->priority == "M") selected @endif>Medium</option>
+                    <option value="H" @if($ticket->priority == "H") selected @endif>High</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>            
+        </form>
+    </x-danger-zone>
 @endsection

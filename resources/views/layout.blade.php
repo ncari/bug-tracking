@@ -137,6 +137,10 @@
         color: inherit;
         text-decoration: none;
       }
+
+      #errors_messages{
+        z-index: 200;
+      }
     </style>
   </head>
   <body>
@@ -217,6 +221,15 @@
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <div class="pt-3 pb-2 mb-3">
+            @if ($errors->any())
+              <div id="errors_messages" class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+            @endif
             @yield('content')
           </div>
         </main>

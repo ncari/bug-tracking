@@ -26,7 +26,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('/projects', ProjectsController::class);
 
-    Route::resource('/tickets', TicketsController::class)->only(['show', 'destroy']);
+    Route::resource('/tickets', TicketsController::class)->only(['show', 'destroy', 'update']);
     Route::resource('/users', UsersController::class)->only(['create', 'store', 'index', 'show', 'update', 'destroy']);
 
     Route::post('/projects/{project}/tickets', [ProjectsTicketsController::class, 'store']);
