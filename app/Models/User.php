@@ -8,6 +8,8 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Project;
+
 class User extends Model implements AuthenticatableContract
 {
     use HasFactory;
@@ -19,6 +21,10 @@ class User extends Model implements AuthenticatableContract
             $password = $user->password;
             $user->password = Hash::make($password);
         });
+    }
+
+    public function projects(){
+        return $this->belongsToMany(Project::class, 'projects_users', 'user_id', 'project_id');
     }
 
     protected $hidden = ['password'];

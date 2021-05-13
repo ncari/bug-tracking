@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectsTicketsController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\TicketsCommentsController;
+use App\Http\Controllers\ProjectsUsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/projects/{project}/tickets', [ProjectsTicketsController::class, 'store']);
     Route::post('/tickets/{ticket}/comments', [TicketsCommentsController::class, 'store']);
+
+    Route::post('/projects/{project}/users', [ProjectsUsersController::class, 'addUsersToProject']);
+    Route::delete('/projects/{project}/users', [ProjectsUsersController::class, 'removeUsersFromProject']);
 
     Route::get('/home', [ProjectsController::class, 'index']);
 });

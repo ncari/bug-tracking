@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+
 class ProjectsController extends Controller
 {
     /**
@@ -50,7 +52,8 @@ class ProjectsController extends Controller
     public function show(Project $project)
     {
         return view('projects.show', [
-            'project' => $project
+            'project' => $project,
+            'users' => User::all()
         ]);
     }
 

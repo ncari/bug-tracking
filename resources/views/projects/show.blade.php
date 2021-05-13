@@ -98,5 +98,28 @@
                 @endif
             </button>
         </form>
+        <div class="mb-3">
+            <form action="/projects/{{$project->id}}/users" method="post">
+                @csrf
+                @method('DELETE')
+                <select name="users[]" multiple class="form-control">
+                    @foreach ($project->collaborators as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">Remove Collaborators</button>
+            </form>
+        </div>
+        <div class="mb-3">
+            <form action="/projects/{{$project->id}}/users" method="post">
+                @csrf
+                <select name="users[]" multiple class="form-control">
+                    @foreach ($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">Add Collaborators</button>
+            </form>
+        </div>
     </x-danger-zone>
 @endsection

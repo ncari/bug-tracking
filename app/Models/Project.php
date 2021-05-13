@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Ticket;
+use App\Models\User;
 
 class Project extends Model
 {
@@ -19,6 +20,10 @@ class Project extends Model
 
     public function tickets(){
         return $this->hasMany(Ticket::class);
+    }
+
+    public function collaborators(){
+        return $this->belongsToMany(User::class, 'projects_users', 'project_id', 'user_id');
     }
 
     protected $table = 'projects';
