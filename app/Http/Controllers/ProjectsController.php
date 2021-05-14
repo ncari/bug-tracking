@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 
@@ -16,8 +17,13 @@ class ProjectsController extends Controller
      */
     public function index()
     {
+        $authUser = Auth::user();
+        if($authUser->can('viewAny', Project::class))
+            $projects = Project::all();
+        else
+            $projects = $authUser->projects;
         return view('projects.index', [
-            'projects' => Project::all()
+            'projects' => $projects
         ]);
     }
 
@@ -28,6 +34,10 @@ class ProjectsController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->cannot('create', Project::class)){
+            abort(403);
+        }
+
         return view('projects.create');
     }
 
@@ -39,7 +49,12 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->cannot('create', Project::class)){
+            abort(403);
+        }
+
         $project = Project::create($request->all());
+        $project->collaborators()->attach(Auth::user());
         return redirect('/projects'.'/'.$project->id);
     }
 
@@ -51,6 +66,10 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
+        if (Auth::user()->cannot('view', $project)) {
+            abort(403);
+        }
+
         return view('projects.show', [
             'project' => $project,
             'users' => User::all()
@@ -77,6 +96,10 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        if (Auth::user()->cannot('update', $project)) {
+            abort(403);
+        }
+
         $project->update($request->all());
         return back();
     }
@@ -89,6 +112,10 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
+        if (Auth::user()->cannot('delete', $project)) {
+            abort(403);
+        }
+
         $project->delete();
         return redirect('/projects');
     }

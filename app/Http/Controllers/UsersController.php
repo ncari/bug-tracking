@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -14,6 +15,10 @@ class UsersController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->cannot('viewAny', User::class)){
+            abort(403);
+        }
+
         return view('users.index', [
             'users' => User::all()
         ]);
@@ -26,6 +31,10 @@ class UsersController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->cannot('create', User::class)){
+            abort(403);
+        }
+
         return view('users.create');
     }
 
@@ -37,6 +46,10 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()->cannot('create', User::class)){
+            abort(403);
+        }
+
         User::create($request->all());
         return back();
     }
@@ -49,6 +62,10 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+        if(Auth::user()->cannot('view', $user)){
+            abort(403);
+        }
+
         return view('users.show', [
             'user' => $user
         ]);
@@ -74,6 +91,10 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        if(Auth::user()->cannot('update', $user)){
+            abort(403);
+        }
+
         $user->update($request->all());
         return back();
     }
@@ -86,6 +107,10 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        if(Auth::user()->cannot('delete', $user)){
+            abort(403);
+        }
+
         $user->delete();
         return redirect('/home');
     }
