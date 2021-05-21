@@ -3,10 +3,9 @@
 @section('content')
     <h1>Users</h1>
     <x-alert-empty name="users" :n="$users->count()">
-      <table class="table">
+      <table class="table table-light table-striped shadow border">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Type</th>
@@ -15,8 +14,7 @@
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <th scope="row"><a href="/users/{{$user->id}}">{{ $user->id }}</a></th>
-                    <td>{{ $user->name }}</td>
+                    <td><a href="/users/{{$user->id}}">{{ $user->name }}</a></td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->type }}</td>
               </tr>

@@ -4,10 +4,9 @@
 @section('content')
     <h1>Projects</h1>
     <x-alert-empty name="projects" :n="$projects->count()">
-      <table class="table">
+      <table class="table table-light table-striped shadow border">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Tickets</th>
@@ -18,8 +17,7 @@
         <tbody>
             @foreach ($projects as $project)
                 <tr>
-                    <th scope="row"><a href="/projects/{{$project->id}}">{{ $project->id }}</a></th>
-                    <td>{{ $project->name }}</td>
+                    <td><a href="/projects/{{$project->id}}">{{ $project->name }}</a></td>
                     <td>{{ $project->description }}</td>
                     <td>{{ $project->tickets->count() }}</td>
                     <td>
