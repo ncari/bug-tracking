@@ -1983,9 +1983,9 @@ var AddCollaboratorsForm = function AddCollaboratorsForm(props) {
         }, user.id);else return null;
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "mt-2",
+      className: "mt-2 d-flex",
       children: usersSelected.map(function (user) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
             type: "hidden",
             value: user.id,
@@ -1997,8 +1997,8 @@ var AddCollaboratorsForm = function AddCollaboratorsForm(props) {
               return remove(user.id);
             },
             children: "".concat(user.name, " X")
-          }, user.id)]
-        });
+          })]
+        }, user.id);
       })
     })]
   });
@@ -2096,7 +2096,7 @@ var RemoveCollaboratorsForm = function RemoveCollaboratorsForm(props) {
     newCollaborators.push(collaboratorsSelected.find(function (collaborator) {
       return collaborator.id === id;
     }));
-    setCollaborators(newUsers);
+    setCollaborators(newCollaborators);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
@@ -2109,7 +2109,7 @@ var RemoveCollaboratorsForm = function RemoveCollaboratorsForm(props) {
       placeholder: "Search users"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       children: collaborators.map(function (collaborator) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+        if (collaborator.name.toLowerCase().startsWith(value.toLowerCase())) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           type: "button",
           className: "btn btn-sm btn-outline-success m-1",
           onClick: function onClick() {
@@ -2119,9 +2119,9 @@ var RemoveCollaboratorsForm = function RemoveCollaboratorsForm(props) {
         }, collaborator.id);
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "mt-2",
+      className: "mt-2 d-flex",
       children: collaboratorsSelected.map(function (collaborator) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
             type: "hidden",
             value: collaborator.id,
@@ -2133,8 +2133,8 @@ var RemoveCollaboratorsForm = function RemoveCollaboratorsForm(props) {
               return remove(collaborator.id);
             },
             children: "".concat(collaborator.name, " +")
-          }, collaborator.id)]
-        });
+          })]
+        }, collaborator.id);
       })
     })]
   });

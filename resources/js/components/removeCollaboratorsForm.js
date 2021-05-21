@@ -22,7 +22,7 @@ const RemoveCollaboratorsForm = (props) => {
 
         let newCollaborators = [...collaborators];
         newCollaborators.push(collaboratorsSelected.find(collaborator => collaborator.id === id));
-        setCollaborators(newUsers);
+        setCollaborators(newCollaborators);
     }
 
     return (  
@@ -30,31 +30,31 @@ const RemoveCollaboratorsForm = (props) => {
             <input value={value} onChange={(e) => setValue(e.target.value)} className="form-control" placeholder="Search users"/>
             <div>
                 {collaborators.map(collaborator => {
-                    return (
-                        <button
-                            key={collaborator.id}
-                            type="button" 
-                            className="btn btn-sm btn-outline-success m-1"
-                            onClick={() => add(collaborator.id)}
-                        >
-                            {`${collaborator.name} X`}
-                        </button>
-                    );
+                    if(collaborator.name.toLowerCase().startsWith(value.toLowerCase()))
+                        return (
+                            <button
+                                key={collaborator.id}
+                                type="button" 
+                                className="btn btn-sm btn-outline-success m-1"
+                                onClick={() => add(collaborator.id)}
+                            >
+                                {`${collaborator.name} X`}
+                            </button>
+                        );
                 })}
             </div>
-            <div className="mt-2">
+            <div className="mt-2 d-flex">
                 {collaboratorsSelected.map((collaborator) => 
-                    <>
+                    <div key={collaborator.id}>
                         <input type="hidden" value={collaborator.id} name="users[]"/>
                         <button
-                            key={collaborator.id} 
                             type="button" 
                             className="btn btn-sm btn-outline-primary m-1"
                             onClick={() => remove(collaborator.id)}
                         >
                             {`${collaborator.name} +`}
                         </button>
-                    </>
+                    </div>
                 )}
             </div>
         </>

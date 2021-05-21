@@ -45,19 +45,18 @@ const AddCollaboratorsForm = (props) => {
                         return null;
                 })}
             </div>
-            <div className="mt-2">
+            <div className="mt-2 d-flex">
                 {usersSelected.map((user) => 
-                    <>
+                    <div key={user.id}>
                         <input type="hidden" value={user.id} name="users[]"/>
                         <button
-                            key={user.id} 
                             type="button" 
                             className="btn btn-sm btn-outline-primary m-1"
                             onClick={() => remove(user.id)}
                         >
                             {`${user.name} X`}
                         </button>
-                    </>
+                    </div>
                 )}
             </div>
         </>
