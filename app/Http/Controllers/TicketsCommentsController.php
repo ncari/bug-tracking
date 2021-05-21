@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Comment;
+use App\Models\Ticket;
 
 class TicketsCommentsController extends Controller
 {
@@ -16,6 +18,9 @@ class TicketsCommentsController extends Controller
      */
     public function store(Request $request, Ticket $ticket)
     {
+        if(Auth::user()->cannot('view', $ticket->project))
+            abort(403);
+
         $comment = new Comment($request->all());
         $ticket->comments()->save($comment);
         return back();

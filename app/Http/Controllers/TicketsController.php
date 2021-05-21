@@ -4,40 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -46,22 +16,14 @@ class TicketsController extends Controller
      */
     public function show(Ticket $ticket)
     {
+        if(Auth::user()->cannot('view', $ticket->project))
+            abort(403);
+
         return view('tickets.show', [
             'ticket' => $ticket,
             'ticket_image' => $ticket->image64(),
             'project' => $ticket->project
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Ticket  $ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
     }
 
     /**
@@ -73,6 +35,9 @@ class TicketsController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
+        if(Auth::user()->cannot('view', $ticket->project))
+            abort(403);
+
         $ticket->update($request->all());
         return back();
     }
@@ -85,6 +50,9 @@ class TicketsController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
+        if(Auth::user()->cannot('view', $ticket->project))
+            abort(403);
+
         $ticket->delete();
         return redirect('/projects'.'/'.$ticket->project->id);
     }
