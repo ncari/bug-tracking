@@ -20,6 +20,8 @@ class TicketsCommentsController extends Controller
     {
         if(Auth::user()->cannot('view', $ticket->project))
             abort(403);
+        else if($ticket->project->archived || $ticket->status === "ARCHIVED")
+            abort(403);
 
         $comment = new Comment($request->all());
         $ticket->comments()->save($comment);

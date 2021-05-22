@@ -37,6 +37,12 @@ class TicketsController extends Controller
     {
         if(Auth::user()->cannot('view', $ticket->project))
             abort(403);
+        else if($ticket->project->archived)
+            abort(403);
+        else if($ticket->status === "ARCHIVED"){
+            if(Auth::user()->cannot('update', $ticket->project))
+                abort(403);
+        }
 
         $ticket->update($request->all());
         return back();
@@ -51,6 +57,8 @@ class TicketsController extends Controller
     public function destroy(Ticket $ticket)
     {
         if(Auth::user()->cannot('view', $ticket->project))
+            abort(403);
+        else if($ticket->project->archived || $ticket->status === "ARCHIVED")
             abort(403);
 
         $ticket->delete();

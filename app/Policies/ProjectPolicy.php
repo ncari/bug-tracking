@@ -72,11 +72,13 @@ class ProjectPolicy
 
 
     public function updateCollaborators(User $user, Project $project){
-        return $this->update($user, $project);
+        return  !$project->archived &&
+                $this->update($user, $project);
     }
 
 
     public function addTicket(User $user, Project $project){
-        return $user->isAdmin() || $project->collaborators->contains($user);
+        return  !$project->archived &&  
+                ($user->isAdmin() || $project->collaborators->contains($user));
     }
 }
