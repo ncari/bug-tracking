@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TicketsController extends Controller
 {
@@ -35,13 +36,8 @@ class TicketsController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        if(Auth::user()->cannot('view', $ticket->project))
+        if (! Gate::allows('update-ticket', $ticket)) {
             abort(403);
-        else if($ticket->project->archived)
-            abort(403);
-        else if($ticket->status === "ARCHIVED"){
-            if(Auth::user()->cannot('update', $ticket->project))
-                abort(403);
         }
 
         $ticket->update($request->all());

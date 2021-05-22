@@ -114,7 +114,6 @@ class TicketsTest extends TestCase
                         'status' => 'OPEN',
                         'priority' => 'M'
                     ]);
-                    
         $res->assertForbidden();
     }
 }

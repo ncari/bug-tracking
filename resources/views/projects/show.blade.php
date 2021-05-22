@@ -58,75 +58,82 @@
                         </table>
                     </x-alert-empty>
                 </div>
-                <div class="mt-4 shadow p-3">
-                    <h4>New Ticket</h4>
-                    <form action="/projects/{{$project->id}}/tickets" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="priority">Priority</label>
-                            <select name="priority" id="priority" class="form-select" required>
-                                <option value="" selected>Choose One</option>
-                                <option value="L">Low</option>
-                                <option value="M">Medium</option>
-                                <option value="H">High</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" class="form-control form-control-sm">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description">Description</label>
-                            <textarea name="description" id="description" name="description" cols="30" rows="5" class="form-control form-control-sm"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="image">Image</label>
-                            <input type="file" name="image" id="image" accept="image/jpg" class="form-control" /> 
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add Ticket</button>
-                    </form>
-                </div>
+                @if (!$project->archived)
+                    <div class="mt-4 shadow p-3">
+                        <h4>New Ticket</h4>
+                        <form action="/projects/{{$project->id}}/tickets" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="priority">Priority</label>
+                                <select name="priority" id="priority" class="form-select" required>
+                                    <option value="" selected>Choose One</option>
+                                    <option value="L">Low</option>
+                                    <option value="M">Medium</option>
+                                    <option value="H">High</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" class="form-control form-control-sm">
+                            </div>
+                            <div class="mb-3">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" name="description" cols="30" rows="5" class="form-control form-control-sm"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image">Image</label>
+                                <input type="file" name="image" id="image" accept="image/jpg" class="form-control" /> 
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Ticket</button>
+                        </form>
+                    </div>
+                @endif
+                
             </div>
         </div>
         <div class="col-4">
 
         </div>
     </div>
-    <div class="row">
-        <x-danger-zone formUrl="/projects/{{$project->id}}" name="Project">
-            <form class="mb-3" action="/projects/{{$project->id}}" method="post">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="archived" value=@if($project->archived) 0 @else 1 @endif>
-                <button type="submit" class="btn btn-sm btn-outline-primary">
-                    @if ($project->archived)
-                        Active Project
-                    @else
-                        Archive Project
-                    @endif
-                </button>
-            </form>
-            <div class="mb-3">
-                <form action="/projects/{{$project->id}}/users" method="post">
-                    <input type="hidden" id="collaborators" value="{{ $project->collaborators->toJson() }}">
+    @can('update', $project)
+        <div class="row">
+            <x-danger-zone formUrl="/projects/{{$project->id}}" name="Project">
+                <form class="mb-3" action="/projects/{{$project->id}}" method="post">
                     @csrf
-                    @method('DELETE')
-                    <div id="removeCollaboratorsForm">
-
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm">Remove Collaborators</button>
+                    @method('PUT')
+                    <input type="hidden" name="archived" value=@if($project->archived) 0 @else 1 @endif>
+                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                        @if ($project->archived)
+                            Active Project
+                        @else
+                            Archive Project
+                        @endif
+                    </button>
                 </form>
-            </div>
-            <div class="mb-3">
-                <input id="users" type="hidden" value="{{ $users->toJson() }}"/>
-                <form action="/projects/{{$project->id}}/users" method="post">
-                    @csrf
-                    <div id="addCollaboratorsForm"">
+                @can('updateCollaborators', $ticket->project)
+                    <div class="mb-3">
+                        <form action="/projects/{{$project->id}}/users" method="post">
+                            <input type="hidden" id="collaborators" value="{{ $project->collaborators->toJson() }}">
+                            @csrf
+                            @method('DELETE')
+                            <div id="removeCollaboratorsForm">
 
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Remove Collaborators</button>
+                        </form>
+                    </div>    
+                    <div class="mb-3">
+                        <input id="users" type="hidden" value="{{ $users->toJson() }}"/>
+                        <form action="/projects/{{$project->id}}/users" method="post">
+                            @csrf
+                            <div id="addCollaboratorsForm"">
+    
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Add Collaborators</button>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm">Add Collaborators</button>
-                </form>
-            </div>
-        </x-danger-zone>
-    </div>
+                @endcan
+            </x-danger-zone>
+        </div>
+    @endcan
 @endsection
