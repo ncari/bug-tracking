@@ -110,7 +110,7 @@
                         @endif
                     </button>
                 </form>
-                @can('updateCollaborators', $ticket->project)
+                @can('updateCollaborators', $project)
                     <div class="mb-3">
                         <form action="/projects/{{$project->id}}/users" method="post">
                             <input type="hidden" id="collaborators" value="{{ $project->collaborators->toJson() }}">
