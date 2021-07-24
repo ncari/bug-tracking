@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Ticket;
 
+use App\Events\TicketCreated;
+
 class ProjectsTicketsController extends Controller
 {
     /**
@@ -33,6 +35,9 @@ class ProjectsTicketsController extends Controller
         $ticket->image_path = $path;
         
         $project->tickets()->save($ticket);
+
+        TicketCreated::dispatch($ticket);
+
         return redirect('/projects'.'/'.$project->id);
     }
 }

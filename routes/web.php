@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/projects/{project}/users', [ProjectsUsersController::class, 'addUsersToProject']);
     Route::delete('/projects/{project}/users', [ProjectsUsersController::class, 'removeUsersFromProject']);
+    Route::post('/projects/{project}/users/subscriptions', [ProjectsUsersController::class, 'subscription']);
 
     Route::get('/home', [ProjectsController::class, 'index']);
 });

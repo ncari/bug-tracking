@@ -30,12 +30,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsToMany(Project::class, 'projects_users', 'user_id', 'project_id');
     }
 
+    public function subscriptions(){
+        return $this->belongsToMany(Project::class, 'subscriptions');
+    }
+
     public function isAdmin(){
         return $this->type === 'ADMIN';
     }
 
     public function isPM(){
         return $this->type === 'PM';
+    }
+
+    public function isSubscribed(Project $project){
+        return $this->subscriptions->contains($project);
     }
 
     protected $hidden = ['password'];

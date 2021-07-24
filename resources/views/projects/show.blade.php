@@ -92,7 +92,29 @@
             </div>
         </div>
         <div class="col-4">
-
+            <div class="container">
+                <div class="mt-5 pb-2 border-bottom">
+                    <div class="card">
+                        <div class="card-header">Configuration</div>
+                        <div class="card-body">
+                            <form action="/projects/{{$project->id}}/users/subscriptions" method="post">
+                                @csrf
+                                <label for="subscribed">Subscribed</label>
+                                <input  
+                                    type="checkbox" 
+                                    name="subscribed" 
+                                    id="subscribed" 
+                                    class="float-end"
+                                    @if (auth()->user()->isSubscribed($project))
+                                        checked
+                                    @endif
+                                    onChange="this.form.submit()"
+                                />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     @can('update', $project)

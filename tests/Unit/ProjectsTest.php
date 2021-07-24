@@ -4,6 +4,8 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use App\Mail\TicketCreated;
+
 class ProjectsTest extends TestCase
 {
     use RefreshDatabase;
@@ -47,5 +49,39 @@ class ProjectsTest extends TestCase
             $res->assertForbidden();       
             $res2->assertForbidden();          
         }
+    }
+
+    public function test_send_email_to_project_subscribers(){
+
+        \Illuminate\Support\Facades\Mail::fake();
+
+        $project = \App\Models\Project::factory()->create([
+            'archived' => false
+        ]);
+        $pm = \App\Models\User::factory()->create([
+            'type' => 'PM',
+        ]);
+        $dev2 = \App\Models\User::factory()->create([
+            'type' => 'DEV',
+        ]);
+        $dev3 = \App\Models\User::factory()->create([
+            'type' => 'DEV'
+        ]);
+
+        $project->collaborators()->attach($pm);
+        $project->collaborators()->attach($dev2);
+        $project->collaborators()->attach($dev3);
+
+        $project->subscribers()->attach($pm);
+        $project->subscribers()->attach($dev2);
+
+        $res = $this->actingAs($pm)
+            ->post('/projects'.'/'.$project->id.'/tickets', [
+                'name' => 'ticket name',
+                'description' => 'ticket description',
+                'priority' => 'L'
+            ]);
+        
+        \Illuminate\Support\Facades\Mail::assertSent(TicketCreated::class, 2);
     }
 }
