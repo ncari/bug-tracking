@@ -32,7 +32,7 @@ class SendTicketCreatedEmail
     {
         $subscribers = $event->ticket->project->subscribers;
         foreach($subscribers as $subscriber){
-            Mail::to($subscribers)->send(new TicketCreatedEmail());
+            Mail::to($subscriber)->send(new TicketCreatedEmail());
         }
     }
 }
