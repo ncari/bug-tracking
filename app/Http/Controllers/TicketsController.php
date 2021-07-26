@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+
+use App\Models\Ticket;
+use App\Models\TicketHistory;
 
 class TicketsController extends Controller
 {
@@ -23,7 +25,10 @@ class TicketsController extends Controller
         return view('tickets.show', [
             'ticket' => $ticket,
             'ticket_image' => $ticket->image64(),
-            'project' => $ticket->project
+            'project' => $ticket->project,
+            'tickets_history' => TicketHistory::where('ticket_id', $ticket->id)
+                                                ->orderByDesc('created_at')
+                                                ->get()
         ]);
     }
 
@@ -40,7 +45,12 @@ class TicketsController extends Controller
             abort(403);
         }
 
+        $originals = $ticket->getOriginal();
+
         $ticket->update($request->all());
+
+        TicketHistory::updateHistory($ticket, $originals, Auth::user()->id);
+
         return back();
     }
 

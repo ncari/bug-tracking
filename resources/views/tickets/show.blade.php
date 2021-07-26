@@ -77,7 +77,19 @@
             </div>
         </div>
         <div class="col-4">
-
+            @if (count($tickets_history) > 0)
+                <h5 class="mt-5">Ticket History</h5>
+                <ul>
+                    @foreach ($tickets_history as $ticket_history)
+                        <li>
+                            <a href="/users/{{$ticket_history->user->id}}">{{$ticket_history->user->name}}</a> has change {{$ticket_history->attribute_name}} 
+                            from {{$ticket_history->attribute_previous_value}} 
+                            to {{$ticket_history->attribute_actual_value}} 
+                            {{$ticket_history->created_at->diffForHumans()}}
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
     @can('update-ticket', $ticket)
